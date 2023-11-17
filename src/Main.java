@@ -11,7 +11,8 @@ public class Main implements Callable<Integer> {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         startTime = System.currentTimeMillis();
-        ExecutorService executor = Executors.newFixedThreadPool(10);
+
+        ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor(10);
         Callable<Integer> callable = new Main();
         Integer resultingInteger = new Integer(0);
         for(int i=0; i< 100; i++) {
