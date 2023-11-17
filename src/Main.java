@@ -3,7 +3,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.*;
 
 public class Main implements Callable<Integer> {
     public static long startTime;
@@ -12,9 +12,9 @@ public class Main implements Callable<Integer> {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         startTime = System.currentTimeMillis();
 
-        ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor(10);
+        ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor();
         Callable<Integer> callable = new Main();
-        Integer resultingInteger = new Integer(0);
+        Integer resultingInteger = 0;
         for(int i=0; i< 100; i++) {
             Future<Integer> future = executor.submit(callable);
             resultingInteger += future.get();
@@ -29,7 +29,7 @@ public class Main implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        Integer fin = new Integer(0);
+        Integer fin = 0;
         for(int i = 0; i < 1000000; i++)
         {
             fin++;
